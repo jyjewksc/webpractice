@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Favicon-->
+    <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
+    <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Simple line icons-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css"
+        rel="stylesheet" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
+        rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <!-- <link href="css/styles.css" rel="stylesheet" /> -->
+    <link href="../static/css/styles.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <script type="text/javascript" charset="utf-8">
+        d3.text("my_csv.csv", function (data) {
+            var parsedCSV = d3.csv.parseRows(data);
+
+            var container = d3.select("body")
+                .append("table")
+
+                .selectAll("tr")
+                .data(parsedCSV).enter()
+                .append("tr")
+
+                .selectAll("td")
+                .data(function (d) { return d; }).enter()
+                .append("td")
+                .text(function (d) { return d; });
+        });
+    </script>
+</body>
+
+</html>

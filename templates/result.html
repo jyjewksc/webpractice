@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Stylish Portfolio - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Simple line icons-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css"
+        rel="stylesheet" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
+        rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../static/css/styles.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand"><a href="#page-top">BDSE27 Group 3</a></li>
+            <li class="sidebar-nav-item"><a href="/">Home</a></li>
+            <li class="sidebar-nav-item"><a href="/about">About Us</a></li>
+            <li class="sidebar-nav-item"><a href="/analysis">Analysis</a></li>
+        </ul>
+    </nav>
+    <!-- Header-->
+    <header class="masthead d-flex align-items-center">
+        <div class="container px-4 px-lg-5 text-center">
+            <h1 class="mb-1">Analysis Result</h1>
+            <div id="genrespinner" class="spinner-border btn" role="status"></div>
+            <button id="genrebt" class="btn btn-primary btn-l text-uppercase" hidden style="height:50px;
+            width:200px; padding: 10px 10px 10px 10px;margin: 30px">Genre</button>
+            <div id="modelresult" hidden style="font-size: calc(1.5rem + 2vw); color: #212529;">
+                <i><em>result_string</em></i>
+                <!-- <i><em>{{result_string}}</em></i> -->
+            </div>
+
+            <a class="btn btn-primary btn-l text-uppercase" href="#resultdetail" style="height:50px;
+            width:200px; padding: 10px 10px 10px 10px;margin: 30px">PCA</a>
+
+            <a class="btn btn-primary btn-l text-uppercase" href="#recommendation" style="height:50px;
+            width:200px; padding: 10px 10px 10px 10px; margin: 30px;">Recommendation List</a>
+        </div>
+    </header>
+
+    <!-- PCA Title-->
+    <section class="content-section bg-primary text-white text-center" style="padding: 10px;" id="resultdetail">
+        <div class="container px-4 px-lg-5">
+            <div class="content-section-heading">
+                <h2>PCA</h2>
+                <span class="service-icon rounded-circle mx-auto mb-3">
+                    <i class="fa fa-area-chart" aria-hidden="true"></i>
+                </span>
+                <h3 class="text-secondary mb-0">Click button below to see more!</h3>
+
+            </div>
+    </section>
+    <!-- PCA Result-->
+    <section class="callout" style="background-color: #fff;">
+        <div class="container px-4 px-lg-5 text-center">
+            <div id="pcaspinner" class="spinner-border btn" style="color: bs-secondary;" role="status"></div>
+            <p class="text-muted">
+                <button id="pcabt" class="btn btn-secondary btn-l text-uppercase" hidden>PCA Result</button>
+                <img id="pcaimg" src="data:;base64,{{img_stream}}" height="auto" width="900" hidden>
+            </p>
+        </div>
+    </section>
+
+
+
+    <!-- Recommendation Title-->
+    <section class="content-section bg-primary text-white text-center" style="padding: 10px;" id="recommendation">
+        <div class="container px-4 px-lg-5">
+            <div class="content-section-heading">
+                <h2>Recommendation List</h2>
+                <span class="service-icon rounded-circle mx-auto mb-3">
+                    <i class="fa fa-list" aria-hidden="true"></i>
+                </span>
+                <h3 class="text-secondary mb-0">Click button below to see more!</h3>
+                
+            </div>
+    </section>
+
+    <!-- Recommendation Result-->
+    <section class="callout" style="background-color: #fff;">
+        <div class="container px-4 px-lg-5 text-center">
+            <div id="recommendspinner" class="spinner-border btn" role="status"></div>
+            <p class="text-muted" style="overflow-x:auto;">
+            <button id="recommendbt" class="btn btn-secondary btn-l text-uppercase" hidden>Recommend
+                    List</button>
+            <table id="recommendtable" >
+
+            </table>
+            </p>
+        </div>
+    </section>
+
+    <!-- 接回傳值 -->
+    <input id="filename" value="{{filename}}" hidden>
+
+    <!-- 以下改圖版本(app.py跟result.html一起改) -->
+    <!-- <div id="genreimg" hidden></div> -->
+
+    <!-- Footer-->
+    <footer class="footer text-center">
+        <div class="container px-4 px-lg-5">
+            <p class="text-muted small mb-0">Copyright &copy; Your Website 2022</p>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="../static/js/scripts.js"></script>
+</body>
+
+<script>
+    var stopper = '0';
+    let fresh_result = function () {
+        let filename = $('#filename').val();
+        $.ajax({
+            url: '/refresh_result',
+            method: 'post',
+            data: { filename: filename },
+            dataType: "json",
+            success: function (res) {
+
+                if (res.type == '1') {
+                    $('#modelresult').text(res.result);
+                    $('#genrebt').prop('hidden', false);
+                    $('#genrespinner').prop('hidden', true);
+
+                    // 以下改圖版本(app.py跟result.html一起改)
+                    // $('#genreimg').text(res.resultpath);
+                }
+                if (res.type == '2') {
+                    document.getElementById('pcaimg').src = res.result
+                    $('#pcabt').prop('hidden', false);
+                    $('#pcaspinner').prop('hidden', true);
+                }
+                if (res.type == '3') {
+                    $('#recommendbt').prop('hidden', false);
+                    $('#recommendspinner').prop('hidden', true);
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            },
+        });
+    }
+
+    $(function () {
+        var x = setInterval(function () {
+            fresh_result();
+            if (stopper == '3') {
+                clearInterval(x);
+            }
+        }
+            , 3000);
+
+        // setInterval(fresh_result,3000);
+
+        $('#genrebt').on('click', function () {
+            $('#modelresult').prop('hidden', false);
+            $('#genrebt').prop('hidden', true);
+
+            // 以下改圖版本(app.py跟result.html一起改)
+            // 用選擇器改css裡的img的url
+            // var box = document.querySelector('header.masthead');
+            // var genreimgpath = document.getElementById("genreimg").innerHTML;
+            // box.style.backgroundImage = "url(" + genreimgpath + ")";
+
+        });
+
+        $('#pcabt').on('click', function () {
+            $('#pcaimg').prop('hidden', false);
+            $('#pcabt').prop('hidden', true);
+        });
+        $('#recommendbt').on('click', function () {
+            let filename = $('#filename').val();
+            $.ajax({
+                url: '/refresh_recommend',
+                method: 'post',
+                data: { filename: filename },
+                dataType: "json",
+                success: function (res) {
+
+                    // $('#recommendtable').html('')
+                    var column_data = '';
+                    column_data += '<thead class="thead-dark">';
+                    column_data += '<tr class="table-active">';
+                    column_data += '<th>#</th>';
+                    column_data += '<th>Song</th>';
+                    column_data += '</tr>';
+                    column_data += '</thead>';
+                    
+
+                    var row_data = '';
+                    for (var arr in res) {
+                        var url = res[arr].url;
+                        var videoname = res[arr].videoname;
+                        var index = res[arr].index;
+                        row_data += '<tbody>';
+                        row_data += '<tr>';
+                        row_data += '<td>' + index + '</td>';
+                        row_data += '<td>' + "<a href=" + url + " target=\"_blank\""+ ">" + videoname + "</a>" + '</td>';
+                        row_data += '</tr>';
+                        row_data += '</tbody>';
+                    };
+                    $('#recommendtable').addClass("table table-striped");
+                    $('#recommendtable').append(column_data);
+                    $('#recommendtable').append(row_data);
+                    
+
+                    console.log(res)
+
+                },
+                error: function (err) {
+                    console.log(err)
+                },
+            });
+
+            $('#recommendbt').prop('hidden', true);
+
+        });
+
+
+    });
+</script>
+
+</html>
