@@ -133,7 +133,13 @@ def dataset():
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     # app.run(debug=True)
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
 
+=======
+#     app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
+>>>>>>> 26ac83ab08159653324b2464152fd5566af3b07f
