@@ -81,8 +81,11 @@ pyrsistent==0.18.1
 python-dateutil==2.8.2
 pytube==12.1.0
 pytz==2022.1
+<<<<<<< HEAD
 pywin32==304
 pywinpty==2.0.5
+=======
+>>>>>>> c1ffcf93602c833c84aed3fef41a9d312bd49878
 pyzmq==23.1.0
 requests==2.28.0
 scipy==1.9.0
