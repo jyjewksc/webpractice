@@ -11,7 +11,7 @@ import recognition.mp4Towav as wav
 import recognition.preprocessing as preprocessing
 import recognition.load_model_DL as model
 import recognition.recommend_songlist as recommend
-import recognition.pca_dot as pca
+import recognition.pca_dot_TSNE as pca
 import os
 
 # 需先在music-main下建立mp4、wav兩個資料夾 
@@ -133,4 +133,7 @@ def dataset():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
+
