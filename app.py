@@ -87,7 +87,7 @@ def refresh_result():
                             response = jsonify({'type':type})    
                     else:
                         # analysis - PCA
-                        result_pca = pca.pca(filename)
+                        result_pca = pca.tsne(filename)
                         type = '2'
                         response = jsonify({'type':type, 'result':result_pca})
                 else:

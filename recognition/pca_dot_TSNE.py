@@ -6,12 +6,16 @@ import seaborn as sns
 # import time
 from sklearn.manifold import TSNE
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+import os
 
 
 
 def tsne(file_name):
+    pca_jpg_output = f'./userfile/{file_name}/pca_jpg/' 
+    if not os.path.isdir(pca_jpg_output):
+        os.mkdir(pca_jpg_output)
 
-    select_df = pd.read_csv('./select_ft_csv/after_select_ft_final30s.csv',index_col=0)
+    select_df = pd.read_csv('./finalcsv/after_select_ft_final30s.csv',index_col=0)
     select_df = select_df.dropna()
     data = select_df.drop(columns=['song_name','videoname','url'],axis=1) # 刪除不要的欄位
 
@@ -19,7 +23,7 @@ def tsne(file_name):
     # userdf_30s2 = pd.read_csv(f'./userfile/{file_name}/csv/{file_name}.csv', index_col=False)
 
     # xen版 
-    userdf_30s2 = pd.read_csv(f'./musicfile/csv/30s/{file_name}/{file_name}.csv', index_col=False)
+    userdf_30s2 = pd.read_csv(f'./userfile/{file_name}/csv/{file_name}.csv', index_col=False)
 
     userdf_30s2 = userdf_30s2.dropna()
     userdf_30s2 = userdf_30s2.drop(columns=['Unnamed: 0','song_name']) # 刪除不要的欄位
@@ -33,6 +37,8 @@ def tsne(file_name):
     data = data.drop(columns=['songid'])
 
     data = data.dropna(axis=1)
+    y = data['label']
+    X = data.loc[:, data.columns != 'label']
     cols = X.columns
     min_max_scaler = preprocessing.MinMaxScaler()
     np_scaled = min_max_scaler.fit_transform(X)
@@ -76,4 +82,8 @@ def tsne(file_name):
     plt.tight_layout()
     plt.axis("off")
     plt.xlabel('TSNE1')
-    plt.savefig(f'./TSNE.png', dpi=300,transparent = False)
+    plt.savefig(f'./static/pca_jpg/{file_name}.png', dpi=300,transparent = False)
+
+    pca_jpg_path = f'static/pca_jpg/{file_name}.png'
+
+    return pca_jpg_path

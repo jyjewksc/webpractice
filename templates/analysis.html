@@ -11,7 +11,7 @@
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
-    rel="stylesheet" type="text/css" />
+        rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../static/css/styles_ analysis.css" rel="stylesheet" />
     <!-- ajax -->
@@ -40,7 +40,8 @@
         <div class="masthead-content text-white">
             <div class="container-fluid px-4 px-lg-0">
                 <!-- <h1 class="mb-5" >Find Our More About The Music You Love</h1> -->
-                <p class="mb-5" style="margin-bottom: 0;font-size: calc(1.375rem + 1vw);font-weight: bold;">Find Out More About The Music You Love!</p>
+                <p class="mb-5" style="margin-bottom: 0;font-size: calc(1.375rem + 1vw);font-weight: bold;">Find Out
+                    More About The Music You Love!</p>
 
                 <form id="contactForm" enctype="multipart/form-data" name="url">
                     <div class="row input-group-newsletter">
@@ -48,30 +49,34 @@
                             <input class="form-control" id="formFileLg" name="yturl"
                                 placeholder="https://www.youtube.com/watch?v=..." aria-label="Enter URL..." />
                         </div>
+                        <span>Please enter Youtube video URL</span>
+                        <br>
+                        <br>
                         <div class="col-auto">
                             <a class="btn btn-primary" id="submitButton" type="submit" href="#modal-center"
-                            value="Submit" uk-toggle >Submit</a>
-                        </div> 
+                                value="Submit" uk-toggle>Submit</a>
+                        </div>
                     </div>
                 </form>
                 <!-- wait message -->
                 <div id="modal-center" class="uk-flex-top" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
                         <form method="post" action="/result" name="goform">
-                            <p id="validstr">Please wait for a few seconds.<br>Don't close the window! </p>
-                            <input id="filename" name="filename" type="text" name="gofilename" hidden/>
-                            <button id="goresult" type="submit" class="btn btn-primary" hidden>gogo</button>
+                            <p id="validstr">Please wait for a few seconds while downloading.<br>Don't close the window! </p>
+                            <input id="filename" name="filename" type="text" name="gofilename" hidden />
+                            <button id="goresult" type="submit" class="btn btn-primary" hidden>Show Result!</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container px-4 px-lg-5 bg-light" style="background-color: #F8F9FA;">
+
+    <!-- footer -->
+    <!-- <div class="containerbg-light" style="background-color: #F8F9FA;" >
         <p class="text-muted small mb-0" style="background-color: #F8F9FA; text-align: center;">Copyright &copy; BDSE27 Group3 2022</p>
-    </div>
-   
-    
+    </div> -->
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
@@ -83,24 +88,24 @@
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 <script>
-    $(function() {
-        
-        $('#submitButton').on('click', function(){
+    $(function () {
+
+        $('#submitButton').on('click', function () {
             let dlurl = document.forms["url"]["yturl"].value;
             $.ajax({
-                url:'/preresult',
-                method:'post',
-                data: {dlurl:dlurl},
+                url: '/preresult',
+                method: 'post',
+                data: { dlurl: dlurl },
                 dataType: "json",
-                success:function(res){
+                success: function (res) {
                     $('#filename').text(res.filename);
                     $('#validstr').text(res.validstr);
-                    if(res.validstr=="Download Complete!"){
-                        $('#filename').attr('value',res.filename);
+                    if (res.validstr == "Download Complete!") {
+                        $('#filename').attr('value', res.filename);
                         $('#goresult').prop('hidden', false);
                     }
                 },
-                error:function(err){
+                error: function (err) {
                     console.log(err);
                 },
             });
@@ -109,4 +114,5 @@
     })
 
 </script>
+
 </html>

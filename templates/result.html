@@ -45,18 +45,18 @@
             </div>
 
             <a class="btn btn-primary btn-l text-uppercase" href="#resultdetail" style="height:50px;
-            width:200px; padding: 10px 10px 10px 10px;margin: 30px">PCA</a>
+            width:200px; padding: 10px 10px 10px 10px;margin: 30px">TSNE</a>
 
             <a class="btn btn-primary btn-l text-uppercase" href="#recommendation" style="height:50px;
             width:200px; padding: 10px 10px 10px 10px; margin: 30px;">Recommendation List</a>
         </div>
     </header>
 
-    <!-- PCA Title-->
+    <!-- TSNE Title-->
     <section class="content-section bg-primary text-white text-center" style="padding: 10px;" id="resultdetail">
         <div class="container px-4 px-lg-5">
             <div class="content-section-heading">
-                <h2>PCA</h2>
+                <h2>TSNE</h2>
                 <span class="service-icon rounded-circle mx-auto mb-3">
                     <i class="fa fa-area-chart" aria-hidden="true"></i>
                 </span>
@@ -64,13 +64,13 @@
 
             </div>
     </section>
-    <!-- PCA Result-->
+    <!-- TSNE Result-->
     <section class="callout" style="background-color: #fff;">
-        <div class="container px-4 px-lg-5 text-center">
-            <div id="pcaspinner" class="spinner-border btn" style="color: bs-secondary;" role="status"></div>
-            <p class="text-muted">
-                <button id="pcabt" class="btn btn-secondary btn-l text-uppercase" hidden>PCA Result</button>
-                <img id="pcaimg" src="data:;base64,{{img_stream}}" height="auto" width="900" hidden>
+        <div class="container-fluid">
+            <div id="pcaspinner" class="spinner-border btn" style="color: bs-secondary;display:block; margin:auto;" role="status" ></div>
+            <p class="text-muted" >
+                <button id="pcabt" class="btn btn-secondary btn-l text-uppercase" hidden style="display:block; margin:auto;">TSNE Result</button>
+                <img id="pcaimg" src="data:;base64,{{img_stream}}" width="70%" hidden style="display:block; margin:auto;">
             </p>
         </div>
     </section>
@@ -92,15 +92,16 @@
 
     <!-- Recommendation Result-->
     <section class="callout" style="background-color: #fff;">
-        <div class="container px-4 px-lg-5 text-center">
+        <div class="container-fluid text-center">
             <div id="recommendspinner" class="spinner-border btn" role="status"></div>
-            <p class="text-muted" style="overflow-x:auto;">
+            <!-- <p class="text-muted" style="overflow-x:auto;"> -->
             <button id="recommendbt" class="btn btn-secondary btn-l text-uppercase" hidden>Recommend
                     List</button>
-            <table id="recommendtable" >
-
+            <table id="recommendtable" class="table table-hover table-bordered" style="width: 80%;" style="background-color: #fff;">
             </table>
-            </p>
+            <br>
+            <span style="color: rgb(112, 109, 109);">- Click on the song name shown in table to listen on Youtube-</span>
+            <!-- </p> -->
         </div>
     </section>
 
@@ -111,11 +112,11 @@
     <!-- <div id="genreimg" hidden></div> -->
 
     <!-- Footer-->
-    <footer class="footer text-center">
-        <div class="container px-4 px-lg-5">
-            <p class="text-muted small mb-0">Copyright &copy; Your Website 2022</p>
+    <div class="row" >
+        <div class="col"> 
+        <p class="text-muted" style = "text-align: center;">Copyright &copy; BDSE27 Group3 2022</p>
         </div>
-    </footer>
+    </div>
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
     <!-- Bootstrap core JS-->
@@ -152,6 +153,8 @@
                     $('#recommendbt').prop('hidden', false);
                     $('#recommendspinner').prop('hidden', true);
                 }
+                stopper = res.type;
+                console.log(stopper)
             },
             error: function (err) {
                 console.log(err)
